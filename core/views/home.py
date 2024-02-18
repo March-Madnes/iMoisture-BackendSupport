@@ -31,6 +31,20 @@ def analyse_soil():
 
 @home.route("/api/crop_suggest")
 def crop_suggest_api():
+    nitrogen = request.args.get("nitrogen", default=30)
+    phosphorous = request.args.get("phosphorous", default=90)
+    potassium = request.args.get("potassium", default=120)
+    ph = request.args.get("ph", default=6)
+    lat = request.args.get("lat")
+    lon = request.args.get("lon")
     url = base_url + "/api/crop_suggest"
-    response = requests.get(url, verify=False)
+    params = {
+        "nitrogen": nitrogen,
+        "phosphorous": phosphorous,
+        "potassium": potassium,
+        "ph": ph,
+        "lat": lat,
+        "lon": lon,
+    }
+    response = requests.get(url, params=params, verify=False)
     return response.json()
